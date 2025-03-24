@@ -254,70 +254,75 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8">
-                {% for match in fixtures %}
+                <!-- Match 1 -->
                 <div class="card">
                     <div class="card-header">
                         <h5>
                             <i class="fas fa-trophy"></i>
-                            {{ match.team1 }} vs {{ match.team2 }}
+                            Chennai Super Kings vs Royal Challengers Bangalore
                         </h5>
                         <div class="match-info mt-2">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <i class="fas fa-calendar-alt me-2"></i>
-                                    <span>{{ match.date }}</span>
+                                    <span>2025-03-22</span>
                                     <i class="fas fa-clock ms-3 me-2"></i>
-                                    <span>{{ match.time }} IST</span>
+                                    <span>19:30 IST</span>
                                 </div>
                             </div>
                             <div class="venue mt-2">
                                 <i class="fas fa-map-marker-alt me-2"></i>
-                                <span>{{ match.venue }}</span>
+                                <span>M.A. Chidambaram Stadium, Chennai</span>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="betting-form">
-                            <form>
+                            <form id="betting-form-1">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Your Username</label>
-                                        <select class="form-select" id="username{{ match.id }}" required>
+                                        <select class="form-select" required>
                                             <option value="">Select Username</option>
-                                            {% for username in usernames %}
-                                            <option value="{{ username }}">{{ username }}</option>
-                                            {% endfor %}
+                                            <option>Anupam</option>
+                                            <option>Akhil</option>
+                                            <option>Abhishek</option>
+                                            <option>Dinesh</option>
+                                            <option>Prashant</option>
+                                            <option>Shantanu</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Opponent Username</label>
-                                        <select class="form-select" id="opponent{{ match.id }}" required>
+                                        <select class="form-select" required>
                                             <option value="">Select Opponent</option>
-                                            {% for username in usernames %}
-                                            <option value="{{ username }}">{{ username }}</option>
-                                            {% endfor %}
+                                            <option>Anupam</option>
+                                            <option>Akhil</option>
+                                            <option>Abhishek</option>
+                                            <option>Dinesh</option>
+                                            <option>Prashant</option>
+                                            <option>Shantanu</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="team-selection mb-3">
                                     <label class="form-label">Select Team</label>
                                     <div class="d-flex gap-2">
-                                        <button type="button" class="team-option flex-grow-1" data-match-id="{{ match.id }}" data-team="{{ match.team1 }}">
+                                        <button type="button" class="team-option flex-grow-1" onclick="selectTeam(this, 'Chennai Super Kings')">
                                             <i class="fas fa-shield-alt"></i>
-                                            {{ match.team1 }}
+                                            Chennai Super Kings
                                         </button>
-                                        <button type="button" class="team-option flex-grow-1" data-match-id="{{ match.id }}" data-team="{{ match.team2 }}">
+                                        <button type="button" class="team-option flex-grow-1" onclick="selectTeam(this, 'Royal Challengers Bangalore')">
                                             <i class="fas fa-shield-alt"></i>
-                                            {{ match.team2 }}
+                                            Royal Challengers Bangalore
                                         </button>
                                     </div>
-                                    <input type="hidden" id="team{{ match.id }}" name="team" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Bet Amount</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-coins"></i></span>
-                                        <input type="number" class="form-control" id="amount{{ match.id }}" name="amount" required min="1">
+                                        <input type="number" class="form-control" required min="1">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">
@@ -327,40 +332,90 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+
+                <!-- Match 2 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5>
+                            <i class="fas fa-trophy"></i>
+                            Punjab Kings vs Delhi Capitals
+                        </h5>
+                        <div class="match-info mt-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-calendar-alt me-2"></i>
+                                    <span>2025-03-23</span>
+                                    <i class="fas fa-clock ms-3 me-2"></i>
+                                    <span>15:30 IST</span>
+                                </div>
+                            </div>
+                            <div class="venue mt-2">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                <span>Punjab Cricket Association Stadium, Mohali</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Similar betting form structure -->
+                    </div>
+                </div>
+
                 <!-- Pagination -->
-                {% if total_pages > 1 %}
                 <nav aria-label="Match pagination" class="mt-4">
                     <ul class="pagination justify-content-center">
-                        {% if current_page > 1 %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ current_page - 1 }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
                         </li>
-                        {% endif %}
-                        
-                        {% for page in range(1, total_pages + 1) %}
-                        <li class="page-item {% if page == current_page %}active{% endif %}">
-                            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
-                        </li>
-                        {% endfor %}
-                        
-                        {% if current_page < total_pages %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ current_page + 1 }}" aria-label="Next">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
-                        {% endif %}
                     </ul>
                 </nav>
-                {% endif %}
             </div>
+
             <div class="col-md-4">
                 <div class="betting-history">
                     <h3><i class="fas fa-history"></i> Betting History</h3>
-                    <div id="bettingHistory"></div>
+                    <div id="bettingHistory">
+                        <!-- Sample bet items -->
+                        <div class="bet-item">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span class="bet-amount">₹77</span>
+                                    <span class="text-white ms-2">on Royal Challengers Bangalore</span>
+                                </div>
+                                <small class="text-muted">22/03/2025</small>
+                            </div>
+                            <div class="bet-details">
+                                <i class="fas fa-user me-1"></i> Abhishek vs Shantanu
+                                <br>
+                                <i class="fas fa-gamepad me-1"></i> Chennai Super Kings vs Royal Challengers Bangalore
+                            </div>
+                        </div>
+
+                        <div class="bet-item">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span class="bet-amount">₹11</span>
+                                    <span class="text-white ms-2">on Chennai Super Kings</span>
+                                </div>
+                                <small class="text-muted">22/03/2025</small>
+                            </div>
+                            <div class="bet-details">
+                                <i class="fas fa-user me-1"></i> Akhil vs Dinesh
+                                <br>
+                                <i class="fas fa-gamepad me-1"></i> Chennai Super Kings vs Royal Challengers Bangalore
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -368,206 +423,76 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        // Initialize team selection for all matches
-        document.addEventListener('DOMContentLoaded', function() {
-            const teamOptions = document.querySelectorAll('.team-option');
-            teamOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    const matchId = this.getAttribute('data-match-id');
-                    const team = this.getAttribute('data-team');
-                    selectTeam(matchId, team);
-                });
+        function selectTeam(button, team) {
+            // Remove selected class from all buttons in the same form
+            const form = button.closest('form');
+            form.querySelectorAll('.team-option').forEach(btn => {
+                btn.classList.remove('selected');
             });
+            // Add selected class to clicked button
+            button.classList.add('selected');
+        }
 
-            // Initialize form submission handlers
-            const forms = document.querySelectorAll('form');
-            forms.forEach(form => {
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    const matchId = this.closest('.card').querySelector('.team-option').getAttribute('data-match-id');
-                    placeBet(event, matchId);
-                });
+        // Add form submission handler
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const username = form.querySelector('select:first-of-type').value;
+                const opponent = form.querySelector('select:last-of-type').value;
+                const selectedTeam = form.querySelector('.team-option.selected');
+                const amount = form.querySelector('input[type="number"]').value;
+
+                if (!username || !opponent) {
+                    alert('Please select both usernames!');
+                    return;
+                }
+
+                if (username === opponent) {
+                    alert('You cannot bet against yourself!');
+                    return;
+                }
+
+                if (!selectedTeam) {
+                    alert('Please select a team!');
+                    return;
+                }
+
+                if (!amount || amount <= 0) {
+                    alert('Please enter a valid bet amount!');
+                    return;
+                }
+
+                // Add bet to history
+                const betHistory = document.getElementById('bettingHistory');
+                const betItem = document.createElement('div');
+                betItem.className = 'bet-item';
+                const match = selectedTeam.closest('.card').querySelector('.card-header h5').textContent.trim();
+                const date = new Date().toLocaleDateString();
+                
+                betItem.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <span class="bet-amount">₹${amount}</span>
+                            <span class="text-white ms-2">on ${selectedTeam.textContent.trim()}</span>
+                        </div>
+                        <small class="text-muted">${date}</small>
+                    </div>
+                    <div class="bet-details">
+                        <i class="fas fa-user me-1"></i> ${username} vs ${opponent}
+                        <br>
+                        <i class="fas fa-gamepad me-1"></i> ${match}
+                    </div>
+                `;
+                
+                betHistory.insertBefore(betItem, betHistory.firstChild);
+
+                // Reset form
+                form.reset();
+                selectedTeam.classList.remove('selected');
+                alert('Bet placed successfully!');
             });
         });
-
-        function selectTeam(matchId, team) {
-            const teamInput = document.getElementById(`team${matchId}`);
-            teamInput.value = team;
-            
-            // Update UI
-            const options = document.querySelectorAll(`[data-match-id="${matchId}"]`);
-            options.forEach(opt => {
-                opt.classList.remove('selected');
-                if (opt.getAttribute('data-team') === team) {
-                    opt.classList.add('selected');
-                }
-            });
-
-            // Log selection for debugging
-            console.log(`Selected team ${team} for match ${matchId}`);
-        }
-
-        function placeBet(event, matchId) {
-            event.preventDefault();
-            console.log('Place bet function called for match:', matchId);
-
-            const username = document.getElementById(`username${matchId}`).value;
-            console.log('Selected username:', username);
-            if (!username) {
-                alert('Please select your username first!');
-                return;
-            }
-
-            const opponent = document.getElementById(`opponent${matchId}`).value;
-            console.log('Selected opponent:', opponent);
-            if (!opponent) {
-                alert('Please select an opponent!');
-                return;
-            }
-
-            if (username === opponent) {
-                alert('You cannot bet against yourself!');
-                return;
-            }
-
-            const team = document.getElementById(`team${matchId}`).value;
-            console.log('Selected team:', team);
-            if (!team) {
-                alert('Please select a team first!');
-                return;
-            }
-
-            const amount = document.getElementById(`amount${matchId}`).value;
-            console.log('Entered amount:', amount);
-            if (!amount || amount <= 0) {
-                alert('Please enter a valid bet amount!');
-                return;
-            }
-
-            // Get match details from the card header
-            const matchCard = event.target.closest('.card');
-            const matchHeader = matchCard.querySelector('.card-header h5');
-            const match = matchHeader.textContent.trim();
-            console.log('Match details:', match);
-
-            // Log the data being sent
-            const betData = {
-                match: match,
-                team: team,
-                amount: parseFloat(amount),
-                username: username,
-                opponent: opponent
-            };
-            console.log('Placing bet with data:', betData);
-
-            // Show loading state
-            const submitButton = event.target.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            submitButton.innerHTML = 'Placing Bet...';
-            submitButton.disabled = true;
-
-            // Make the API call
-            console.log('Making API call to /api/place_bet');
-            fetch('/api/place_bet', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(betData)
-            })
-            .then(response => {
-                console.log('Response status:', response.status);
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        console.error('Error response:', err);
-                        throw new Error(err.error || `HTTP error! status: ${response.status}`);
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Response data:', data);
-                if (data.success) {
-                    // Show success message
-                    const successMessage = document.createElement('div');
-                    successMessage.className = 'alert alert-success mt-3';
-                    successMessage.textContent = 'Bet placed successfully!';
-                    event.target.appendChild(successMessage);
-                    
-                    // Clear the amount field
-                    document.getElementById(`amount${matchId}`).value = '';
-                    
-                    // Remove success message after 3 seconds
-                    setTimeout(() => {
-                        successMessage.remove();
-                    }, 3000);
-                    
-                    // Update betting history
-                    loadBettingHistory();
-                } else {
-                    throw new Error(data.error || 'Failed to place bet');
-                }
-            })
-            .catch(error => {
-                console.error('Error placing bet:', error);
-                alert(error.message || 'Failed to place bet. Please try again.');
-            })
-            .finally(() => {
-                // Restore button state
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-            });
-        }
-
-        function loadBettingHistory() {
-            fetch('/api/bets')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(bets => {
-                    const historyDiv = document.getElementById('bettingHistory');
-                    historyDiv.innerHTML = '';
-                    
-                    if (bets.length === 0) {
-                        historyDiv.innerHTML = '<p class="text-muted">No bets placed yet.</p>';
-                        return;
-                    }
-
-                    bets.forEach(bet => {
-                        const betItem = document.createElement('div');
-                        betItem.className = 'bet-item';
-                        betItem.innerHTML = `
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span class="bet-amount">₹${bet.amount}</span>
-                                    <span class="text-white ms-2">on ${bet.team}</span>
-                                </div>
-                                <small class="text-muted">${new Date(bet.date).toLocaleDateString()}</small>
-                            </div>
-                            <div class="bet-details">
-                                <i class="fas fa-user me-1"></i> ${bet.username} vs ${bet.opponent}
-                                <br>
-                                <i class="fas fa-gamepad me-1"></i> ${bet.match}
-                            </div>
-                        `;
-                        historyDiv.appendChild(betItem);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error loading betting history:', error);
-                    const historyDiv = document.getElementById('bettingHistory');
-                    historyDiv.innerHTML = '<div class="alert alert-danger">Failed to load betting history</div>';
-                });
-        }
-
-        // Load betting history on page load
-        loadBettingHistory();
     </script>
 </body>
 </html> 
