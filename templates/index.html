@@ -356,7 +356,59 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- Similar betting form structure -->
+                        <div class="betting-form">
+                            <form id="betting-form-2">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Your Username</label>
+                                        <select class="form-select" required>
+                                            <option value="">Select Username</option>
+                                            <option>Anupam</option>
+                                            <option>Akhil</option>
+                                            <option>Abhishek</option>
+                                            <option>Dinesh</option>
+                                            <option>Prashant</option>
+                                            <option>Shantanu</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Opponent Username</label>
+                                        <select class="form-select" required>
+                                            <option value="">Select Opponent</option>
+                                            <option>Anupam</option>
+                                            <option>Akhil</option>
+                                            <option>Abhishek</option>
+                                            <option>Dinesh</option>
+                                            <option>Prashant</option>
+                                            <option>Shantanu</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="team-selection mb-3">
+                                    <label class="form-label">Select Team</label>
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="team-option flex-grow-1" onclick="selectTeam(this, 'Punjab Kings')">
+                                            <i class="fas fa-shield-alt"></i>
+                                            Punjab Kings
+                                        </button>
+                                        <button type="button" class="team-option flex-grow-1" onclick="selectTeam(this, 'Delhi Capitals')">
+                                            <i class="fas fa-shield-alt"></i>
+                                            Delhi Capitals
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Bet Amount</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-coins"></i></span>
+                                        <input type="number" class="form-control" required min="1">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-check-circle"></i> Place Bet
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
@@ -385,36 +437,7 @@
                 <div class="betting-history">
                     <h3><i class="fas fa-history"></i> Betting History</h3>
                     <div id="bettingHistory">
-                        <!-- Sample bet items -->
-                        <div class="bet-item">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span class="bet-amount">₹77</span>
-                                    <span class="text-white ms-2">on Royal Challengers Bangalore</span>
-                                </div>
-                                <small class="text-muted">22/03/2025</small>
-                            </div>
-                            <div class="bet-details">
-                                <i class="fas fa-user me-1"></i> Abhishek vs Shantanu
-                                <br>
-                                <i class="fas fa-gamepad me-1"></i> Chennai Super Kings vs Royal Challengers Bangalore
-                            </div>
-                        </div>
-
-                        <div class="bet-item">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div>
-                                    <span class="bet-amount">₹11</span>
-                                    <span class="text-white ms-2">on Chennai Super Kings</span>
-                                </div>
-                                <small class="text-muted">22/03/2025</small>
-                            </div>
-                            <div class="bet-details">
-                                <i class="fas fa-user me-1"></i> Akhil vs Dinesh
-                                <br>
-                                <i class="fas fa-gamepad me-1"></i> Chennai Super Kings vs Royal Challengers Bangalore
-                            </div>
-                        </div>
+                        <!-- Betting history will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -510,4 +533,4 @@
         document.addEventListener('DOMContentLoaded', initializeBettingHistory);
     </script>
 </body>
-</html> 
+</html>
