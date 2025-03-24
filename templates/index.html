@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Betting App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --ipl-yellow: #FFD700;
+            --ipl-blue: #1E3A8A;
+            --ipl-red: #DC2626;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, var(--ipl-blue) 0%, var(--ipl-red) 100%);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar-brand {
+            color: var(--ipl-yellow) !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .navbar-brand i {
+            margin-right: 10px;
+            color: var(--ipl-yellow);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, var(--ipl-blue) 0%, var(--ipl-red) 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1rem;
+        }
+
+        .card-header h5 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .match-info {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .match-info i {
+            color: var(--ipl-yellow);
+        }
+
+        .venue {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .venue i {
+            color: var(--ipl-yellow);
+        }
+
+        .team-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .team-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .team-option.selected {
+            background: var(--ipl-blue);
+            border-color: var(--ipl-yellow);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .team-option i {
+            font-size: 1.2rem;
+            color: var(--ipl-yellow);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--ipl-yellow);
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--ipl-blue) 0%, var(--ipl-red) 100%);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        .betting-history {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .betting-history h3 {
+            color: var(--ipl-yellow);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .bet-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--ipl-yellow);
+        }
+
+        .bet-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .bet-amount {
+            color: var(--ipl-yellow);
+            font-weight: bold;
+        }
+
+        .bet-details {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .team-logo {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: white;
+        }
+
+        .select2-dropdown {
+            background: #2d2d2d;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background: var(--ipl-blue);
+            color: white;
+        }
+
+        /* Pagination Styling */
+        .pagination {
+            margin-top: 2rem;
+        }
+
+        .page-link {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            margin: 0 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--ipl-yellow);
+            border-color: var(--ipl-yellow);
+            transform: translateY(-2px);
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(90deg, var(--ipl-blue) 0%, var(--ipl-red) 100%);
+            border-color: var(--ipl-yellow);
+            color: var(--ipl-yellow);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .page-item.disabled .page-link {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-cricket-bat-ball"></i>
+                IPL Betting
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                {% for match in fixtures %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5>
+                            <i class="fas fa-trophy"></i>
+                            {{ match.team1 }} vs {{ match.team2 }}
+                        </h5>
+                        <div class="match-info mt-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-calendar-alt me-2"></i>
+                                    <span>{{ match.date }}</span>
+                                    <i class="fas fa-clock ms-3 me-2"></i>
+                                    <span>{{ match.time }} IST</span>
+                                </div>
+                            </div>
+                            <div class="venue mt-2">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                <span>{{ match.venue }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="betting-form">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Your Username</label>
+                                        <select class="form-select" id="username{{ match.id }}" required>
+                                            <option value="">Select Username</option>
+                                            {% for username in usernames %}
+                                            <option value="{{ username }}">{{ username }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Opponent Username</label>
+                                        <select class="form-select" id="opponent{{ match.id }}" required>
+                                            <option value="">Select Opponent</option>
+                                            {% for username in usernames %}
+                                            <option value="{{ username }}">{{ username }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="team-selection mb-3">
+                                    <label class="form-label">Select Team</label>
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="team-option flex-grow-1" data-match-id="{{ match.id }}" data-team="{{ match.team1 }}">
+                                            <i class="fas fa-shield-alt"></i>
+                                            {{ match.team1 }}
+                                        </button>
+                                        <button type="button" class="team-option flex-grow-1" data-match-id="{{ match.id }}" data-team="{{ match.team2 }}">
+                                            <i class="fas fa-shield-alt"></i>
+                                            {{ match.team2 }}
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="team{{ match.id }}" name="team" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Bet Amount</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-coins"></i></span>
+                                        <input type="number" class="form-control" id="amount{{ match.id }}" name="amount" required min="1">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-check-circle"></i> Place Bet
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- Pagination -->
+                {% if total_pages > 1 %}
+                <nav aria-label="Match pagination" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if current_page > 1 %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ current_page - 1 }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for page in range(1, total_pages + 1) %}
+                        <li class="page-item {% if page == current_page %}active{% endif %}">
+                            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                        </li>
+                        {% endfor %}
+                        
+                        {% if current_page < total_pages %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ current_page + 1 }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <div class="betting-history">
+                    <h3><i class="fas fa-history"></i> Betting History</h3>
+                    <div id="bettingHistory"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // Initialize team selection for all matches
+        document.addEventListener('DOMContentLoaded', function() {
+            const teamOptions = document.querySelectorAll('.team-option');
+            teamOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const matchId = this.getAttribute('data-match-id');
+                    const team = this.getAttribute('data-team');
+                    selectTeam(matchId, team);
+                });
+            });
+
+            // Initialize form submission handlers
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const matchId = this.closest('.card').querySelector('.team-option').getAttribute('data-match-id');
+                    placeBet(event, matchId);
+                });
+            });
+        });
+
+        function selectTeam(matchId, team) {
+            const teamInput = document.getElementById(`team${matchId}`);
+            teamInput.value = team;
+            
+            // Update UI
+            const options = document.querySelectorAll(`[data-match-id="${matchId}"]`);
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.getAttribute('data-team') === team) {
+                    opt.classList.add('selected');
+                }
+            });
+
+            // Log selection for debugging
+            console.log(`Selected team ${team} for match ${matchId}`);
+        }
+
+        function placeBet(event, matchId) {
+            event.preventDefault();
+            console.log('Place bet function called for match:', matchId);
+
+            const username = document.getElementById(`username${matchId}`).value;
+            console.log('Selected username:', username);
+            if (!username) {
+                alert('Please select your username first!');
+                return;
+            }
+
+            const opponent = document.getElementById(`opponent${matchId}`).value;
+            console.log('Selected opponent:', opponent);
+            if (!opponent) {
+                alert('Please select an opponent!');
+                return;
+            }
+
+            if (username === opponent) {
+                alert('You cannot bet against yourself!');
+                return;
+            }
+
+            const team = document.getElementById(`team${matchId}`).value;
+            console.log('Selected team:', team);
+            if (!team) {
+                alert('Please select a team first!');
+                return;
+            }
+
+            const amount = document.getElementById(`amount${matchId}`).value;
+            console.log('Entered amount:', amount);
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid bet amount!');
+                return;
+            }
+
+            // Get match details from the card header
+            const matchCard = event.target.closest('.card');
+            const matchHeader = matchCard.querySelector('.card-header h5');
+            const match = matchHeader.textContent.trim();
+            console.log('Match details:', match);
+
+            // Log the data being sent
+            const betData = {
+                match: match,
+                team: team,
+                amount: parseFloat(amount),
+                username: username,
+                opponent: opponent
+            };
+            console.log('Placing bet with data:', betData);
+
+            // Show loading state
+            const submitButton = event.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = 'Placing Bet...';
+            submitButton.disabled = true;
+
+            // Make the API call
+            console.log('Making API call to /api/place_bet');
+            fetch('/api/place_bet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(betData)
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        console.error('Error response:', err);
+                        throw new Error(err.error || `HTTP error! status: ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                if (data.success) {
+                    // Show success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'alert alert-success mt-3';
+                    successMessage.textContent = 'Bet placed successfully!';
+                    event.target.appendChild(successMessage);
+                    
+                    // Clear the amount field
+                    document.getElementById(`amount${matchId}`).value = '';
+                    
+                    // Remove success message after 3 seconds
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 3000);
+                    
+                    // Update betting history
+                    loadBettingHistory();
+                } else {
+                    throw new Error(data.error || 'Failed to place bet');
+                }
+            })
+            .catch(error => {
+                console.error('Error placing bet:', error);
+                alert(error.message || 'Failed to place bet. Please try again.');
+            })
+            .finally(() => {
+                // Restore button state
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            });
+        }
+
+        function loadBettingHistory() {
+            fetch('/api/bets')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(bets => {
+                    const historyDiv = document.getElementById('bettingHistory');
+                    historyDiv.innerHTML = '';
+                    
+                    if (bets.length === 0) {
+                        historyDiv.innerHTML = '<p class="text-muted">No bets placed yet.</p>';
+                        return;
+                    }
+
+                    bets.forEach(bet => {
+                        const betItem = document.createElement('div');
+                        betItem.className = 'bet-item';
+                        betItem.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span class="bet-amount">₹${bet.amount}</span>
+                                    <span class="text-white ms-2">on ${bet.team}</span>
+                                </div>
+                                <small class="text-muted">${new Date(bet.date).toLocaleDateString()}</small>
+                            </div>
+                            <div class="bet-details">
+                                <i class="fas fa-user me-1"></i> ${bet.username} vs ${bet.opponent}
+                                <br>
+                                <i class="fas fa-gamepad me-1"></i> ${bet.match}
+                            </div>
+                        `;
+                        historyDiv.appendChild(betItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading betting history:', error);
+                    const historyDiv = document.getElementById('bettingHistory');
+                    historyDiv.innerHTML = '<div class="alert alert-danger">Failed to load betting history</div>';
+                });
+        }
+
+        // Load betting history on page load
+        loadBettingHistory();
+    </script>
+</body>
+</html> 
